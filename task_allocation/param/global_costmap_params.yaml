@@ -1,0 +1,20 @@
+global_costmap:
+  global_frame: map
+  robot_base_frame: base_footprint
+
+  update_frequency: 10.0
+  publish_frequency: 10.0
+  transform_tolerance: 0.5
+
+  # static_map: true
+    # 使用 plugins 列表来定义层 (推荐方式)
+  plugins:
+    - {name: static_layer,    type: "costmap_2d::StaticLayer"}
+    - {name: obstacle_layer,  type: "costmap_2d::ObstacleLayer"} # 假设你也有障碍物层
+    - {name: inflation_layer, type: "costmap_2d::InflationLayer"} # 假设你也有膨胀层
+    # 注意：顺序可能重要，静态层通常在最底层
+
+  # 为 static_layer 插件提供明确的参数配置
+  static_layer:
+    enabled: true             # 确保它是启用的
+    map_topic: "/map"         # <--- ！！！明确指定订阅全局 /map 话题！！！

@@ -1,0 +1,45 @@
+<launch>
+  <arg name="model" default="burger" />
+  <arg name="x1" default="0.0" />
+  <arg name="y1" default="0.5" />
+  <arg name="x2" default="1.0" />
+  <arg name="y2" default="0.5" />
+  <arg name="x3" default="2.0" />
+  <arg name="y3" default="0.5" />
+  <arg name="move_forward_only" default="false"/>
+  <arg name="map_file" default="$(find task_allocation)/map/map2_small.yaml"/>
+  <arg name="robot1_name" default="robot1"/>
+  <arg name="robot2_name" default="robot2"/>
+  <arg name="robot3_name" default="robot3"/>
+
+  <!-- <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" value="$(find task_allocation)/world/test.world"/>
+      <arg name="paused" value="false"/>
+      <arg name="use_sim_time" value="true"/>
+      <arg name="gui" value="true"/>
+      <arg name="headless" value="false"/>
+      <arg name="debug" value="false"/>
+  </include> -->
+
+  <!-- Map server -->
+<node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" output="screen"/>
+
+
+     <!-- AMCL -->
+    <!-- <include file="$(find task_allocation)/launch/amcl.launch">
+    <arg name="robot_name"     value="robot1"/>
+      <arg name="initial_pose_x" value="0.0"/>
+      <arg name="initial_pose_y" value="0.5"/>
+      <arg name="initial_pose_a" value="0.0"/>
+      
+      </include> -->
+  <!-- <group ns="$(arg robot1_name)">
+    <param name="robot_description" command="$(find xacro)/xacro '$(find task_allocation)/urdf/turtlebot3_burger.urdf.xacro' robot_namespace:=robot1" />
+    <node name="spawn_robot1" pkg="gazebo_ros" type="spawn_model" args="-urdf -model robot1 -x $(arg x1) -y $(arg y1) -param robot_description" />
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+    <param name="tf_prefix" value="robot1" />
+
+  
+  </group> -->
+<node pkg="rviz" name="rviz" type="rviz" args="-d $(find task_allocation)/rviz/test.rviz" output="screen"/>
+  </launch>
